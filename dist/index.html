@@ -1,0 +1,101 @@
+<html>
+  <head>
+    <title>MC Craft</title>
+    <meta charset="utf-8">
+
+    <!-- styles -->
+    <!-- <link rel="stylesheet" href="public/css/main.css" type="text/css"> -->
+    <style>
+      .tt-input, /* UPDATE: newer versions use tt-input instead of tt-query */
+      .tt-hint {
+          width: 396px;
+          height: 30px;
+          padding: 8px 12px;
+          font-size: 24px;
+          line-height: 30px;
+          border: 2px solid #ccc;
+          border-radius: 8px;
+          outline: none;
+      }
+
+      .tt-input { /* UPDATE: newer versions use tt-input instead of tt-query */
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+
+      .tt-hint {
+          color: #999;
+      }
+
+      .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+          width: 422px;
+          margin-top: 12px;
+          padding: 8px 0;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border: 1px solid rgba(0, 0, 0, 0.2);
+          border-radius: 8px;
+          box-shadow: 0 5px 10px rgba(0,0,0,.2);
+      }
+
+      .tt-suggestion {
+          padding: 3px 20px;
+          font-size: 18px;
+          line-height: 24px;
+      }
+
+      .tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+          color: #fff;
+          background-color: #0097cf;
+
+      }
+
+      .tt-suggestion p {
+          margin: 0;
+      }
+    </style>
+
+    <!-- js files -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+    <script type="text/javascript">
+      $(function() {
+        var normalizedBlocksAndItems =
+            Object.keys(emceeCraft.blocksByName).concat(
+                Object.keys(emceeCraft.itemsByName));
+            // emceeCraft.blocks.concat(emceeCraft.items);
+        var blocksAndItems = new Bloodhound({
+          datumTokenizer: Bloodhound.tokenizers.nonword,
+          // datumTokenizer: Bloodhound.tokenizers.obj.nonword('displayName'),
+          queryTokenizer: Bloodhound.tokenizers.whitespace,
+          local: normalizedBlocksAndItems
+        });
+
+        // load typeahead
+        $('#search .typeahead').typeahead({
+          hint: true,
+          highlight: true,
+          minLength: 1
+        }, {
+          name: 'normalizedBlocksAndItems',
+          source: blocksAndItems,
+          templates: {
+            empty: '<div>We couldn\'t find that block or item :(</div>',
+            // suggestion: Handlebars.compile('<div>{{ displayName }}</div>')
+          }
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+    <div class="app-container">
+      <div id="search">
+        <input class="typeahead" type="text" placeholder="block or item">
+      </div>
+    </div>
+  </body>
+
+</html>

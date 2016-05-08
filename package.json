@@ -1,0 +1,22 @@
+{
+  "name": "mc-craft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./index.js",
+  "browser": {
+    "browser.js": "./browser.js"
+  },
+  "scripts": {
+    "build": "browserify browser.js -o ./dist/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "minecraft-data": "1.2.6",
+    "underscore": "1.8.3"
+  },
+  "devDependencies": {
+    "browserify": "13.0.0"
+  }
+}
